@@ -46,7 +46,7 @@ class CustomEntryAdapter(private val fragment: Fragment) :
             sumOfFruits += fruit.amount
             val chip = Chip(fragment.requireContext())
 
-            chip.text = fruit.fruitType
+            chip.text = "${fruit.amount} x ${fruit.fruitType}"
             chip.chipBackgroundColor = getChipColor(fruit.fruitType)
             chip.setTextColor(Color.WHITE)
             Glide.with(fragment)
