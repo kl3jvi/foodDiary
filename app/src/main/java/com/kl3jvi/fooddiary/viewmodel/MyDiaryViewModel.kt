@@ -14,7 +14,7 @@ class MyDiaryViewModel(private val myDiaryRepository: MyDiaryRepository) : ViewM
     val test = MutableLiveData<String>()
 
 
-    fun doTest(){
+    fun doTest() {
         test.value = "ckemi"
     }
 
@@ -27,6 +27,15 @@ class MyDiaryViewModel(private val myDiaryRepository: MyDiaryRepository) : ViewM
         }
     }
 
+
+    fun getFruits() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = myDiaryRepository.getFruits()))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+        }
+    }
 }
 
 class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {

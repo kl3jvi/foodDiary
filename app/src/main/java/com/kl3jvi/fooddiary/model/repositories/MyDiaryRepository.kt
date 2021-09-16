@@ -4,4 +4,6 @@ import com.kl3jvi.fooddiary.model.network.ApiHelper
 
 class MyDiaryRepository(private val apiHelper: ApiHelper) {
     suspend fun getEntries() = apiHelper.getEntries()
+
+    suspend fun getFruits() = apiHelper.getFruits()
 }

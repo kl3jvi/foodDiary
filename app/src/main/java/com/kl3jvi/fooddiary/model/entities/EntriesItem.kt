@@ -1,15 +1,13 @@
 package com.kl3jvi.fooddiary.model.entities
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
 data class EntriesItem(
-    @Json(name = "date")
+    @SerializedName("date")
     val date: String,
-    @Json(name = "fruit")
-    val fruit: List<Fruit>,
-    @Json(name = "id")
+    @SerializedName("fruit")
+    val fruit: List<FruitEntry>,
+    @SerializedName("id")
     val id: Int
 )
