@@ -6,7 +6,8 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("users") //TODO CHange the entry
-    suspend fun getUsers(): List<Entries>
+
+    @GET("/api/fruit")
+    suspend fun getEntries(): List<Entries>
 
 }

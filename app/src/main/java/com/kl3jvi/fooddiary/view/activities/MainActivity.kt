@@ -1,4 +1,4 @@
-package com.kl3jvi.fooddiary
+package com.kl3jvi.fooddiary.view.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.kl3jvi.fooddiary.R
 import com.kl3jvi.fooddiary.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
