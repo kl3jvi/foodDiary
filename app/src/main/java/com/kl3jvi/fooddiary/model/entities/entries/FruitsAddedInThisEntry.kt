@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class FruitEntry(
+data class FruitsAddedInThisEntry(
     @SerializedName("amount")
     val amount: Int,
     @SerializedName("fruitId")

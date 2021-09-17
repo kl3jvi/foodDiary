@@ -10,7 +10,7 @@ data class EntriesItem(
     @SerializedName("date")
     val date: String,
     @SerializedName("fruit")
-    val fruit: List<FruitEntry>,
+    val fruit: List<FruitsAddedInThisEntry>,
     @SerializedName("id")
     val id: Int
 ) : Parcelable

@@ -6,14 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kl3jvi.fooddiary.databinding.ItemAddEntryBinding
-import com.kl3jvi.fooddiary.model.entities.entries.FruitEntry
+import com.kl3jvi.fooddiary.model.entities.entries.FruitsAddedInThisEntry
 import com.kl3jvi.fooddiary.model.entities.fruit.FruitItem
 import com.kl3jvi.fooddiary.utils.Constants
-import com.kl3jvi.fooddiary.view.activities.AddEntryActivity
 
 class CustomAddAdapter(private val activity: Activity) :
     RecyclerView.Adapter<CustomAddAdapter.ViewHolder>() {
+    private val arrayOfItems = ArrayList<FruitItem>()
     private var list: List<FruitItem> = listOf()
+
+    private var fruitsForEdit: List<FruitsAddedInThisEntry> = listOf()
 
     inner class ViewHolder(view: ItemAddEntryBinding) : RecyclerView.ViewHolder(view.root) {
         val image = view.fruitImg
@@ -30,8 +32,14 @@ class CustomAddAdapter(private val activity: Activity) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
-
         var ctr = 0;
+        fruitsForEdit.forEach {
+            if(it.fruitId == item.id){
+                holder.counter.text  = it.amount.toString()
+                ctr = it.amount
+            }
+        }
+
         holder.add.setOnClickListener {
             ctr++
             holder.counter.text = ctr.toString()
@@ -48,6 +56,7 @@ class CustomAddAdapter(private val activity: Activity) :
             .into(holder.image)
 
 
+        arrayOfItems.add(item)
     }
 
     override fun getItemCount() = list.size
@@ -55,6 +64,12 @@ class CustomAddAdapter(private val activity: Activity) :
 
     fun fruitList(listOfFr: List<FruitItem>) {
         list = listOfFr
+        notifyDataSetChanged()
+    }
+
+
+    fun passTest(fruitsAdded: List<FruitsAddedInThisEntry>) {
+        fruitsForEdit = fruitsAdded
         notifyDataSetChanged()
     }
 }

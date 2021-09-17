@@ -1,6 +1,7 @@
 package com.kl3jvi.fooddiary.view.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kl3jvi.fooddiary.R
 import com.kl3jvi.fooddiary.databinding.ActivityAddEntryBinding
-import com.kl3jvi.fooddiary.model.entities.entries.EntriesItem
+import com.kl3jvi.fooddiary.model.entities.local.EntryTransfer
 import com.kl3jvi.fooddiary.model.network.ApiHelper
 import com.kl3jvi.fooddiary.model.network.RetrofitBuilder
 import com.kl3jvi.fooddiary.utils.Constants
@@ -23,7 +24,7 @@ class AddEntryActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityAddEntryBinding
     private lateinit var viewModel: AddEntryActivityViewModel
     private lateinit var adapter: CustomAddAdapter
-    private lateinit var mEntryItem: EntriesItem
+    private lateinit var mEntryItem: EntryTransfer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +38,9 @@ class AddEntryActivity : AppCompatActivity(), View.OnClickListener {
         }
 
 
-        mEntryItem.fruit.forEach {
 
-        }
+
+
 
         viewModel = ViewModelProvider(
             this,
@@ -49,7 +50,7 @@ class AddEntryActivity : AppCompatActivity(), View.OnClickListener {
         binding.rvList.layoutManager = GridLayoutManager(this, 2)
         adapter = CustomAddAdapter(this)
         binding.rvList.adapter = adapter
-        binding.dateInput.setOnClickListener(this)
+        adapter.passTest(mEntryItem.fruitsAdded)
 
         viewModel.getFruits().observe(this, { res ->
             res?.let { resource ->

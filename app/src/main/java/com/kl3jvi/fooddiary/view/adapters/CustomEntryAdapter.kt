@@ -17,6 +17,7 @@ import com.google.android.material.chip.Chip
 import com.kl3jvi.fooddiary.R
 import com.kl3jvi.fooddiary.databinding.ItemEntryBinding
 import com.kl3jvi.fooddiary.model.entities.entries.Entries
+import com.kl3jvi.fooddiary.model.entities.local.EntryTransfer
 import com.kl3jvi.fooddiary.utils.Constants
 import com.kl3jvi.fooddiary.view.activities.AddEntryActivity
 import com.kl3jvi.fooddiary.view.fragments.MyDiaryFragment
@@ -82,7 +83,10 @@ class CustomEntryAdapter(private val fragment: Fragment) :
                 if (it.itemId == R.id.action_edit_entry) {
                     val intent =
                         Intent(fragment.requireActivity(), AddEntryActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_DETAILS, entry)
+                    intent.putExtra(
+                        Constants.EXTRA_DETAILS,
+                        EntryTransfer(entry.fruit, entry.id)
+                    )
                     fragment.requireActivity().startActivity(intent)
                 } else if (it.itemId == R.id.action_delete_entry) {
                     if (fragment is MyDiaryFragment) {
