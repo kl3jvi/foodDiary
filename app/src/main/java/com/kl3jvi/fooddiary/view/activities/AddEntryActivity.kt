@@ -2,22 +2,20 @@ package com.kl3jvi.fooddiary.view.activities
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.datepicker.MaterialDatePicker
+import com.kl3jvi.fooddiary.R
 import com.kl3jvi.fooddiary.databinding.ActivityAddEntryBinding
-import com.kl3jvi.fooddiary.model.entities.entries.CreateEntry
+import com.kl3jvi.fooddiary.model.entities.entries.EntriesItem
 import com.kl3jvi.fooddiary.model.network.ApiHelper
 import com.kl3jvi.fooddiary.model.network.RetrofitBuilder
+import com.kl3jvi.fooddiary.utils.Constants
 import com.kl3jvi.fooddiary.utils.Status
 import com.kl3jvi.fooddiary.view.adapters.CustomAddAdapter
 import com.kl3jvi.fooddiary.viewmodel.AddEntryActivityViewModel
 import com.kl3jvi.fooddiary.viewmodel.AddEntryViewModelFactory
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class AddEntryActivity : AppCompatActivity(), View.OnClickListener {
@@ -25,11 +23,23 @@ class AddEntryActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityAddEntryBinding
     private lateinit var viewModel: AddEntryActivityViewModel
     private lateinit var adapter: CustomAddAdapter
+    private lateinit var mEntryItem: EntriesItem
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddEntryBinding.inflate(layoutInflater)
         supportActionBar?.title = "Add Fruit Entry"
         setContentView(binding.root)
+
+        if (intent.hasExtra(Constants.EXTRA_DETAILS)) {
+            mEntryItem = intent.getParcelableExtra(Constants.EXTRA_DETAILS)!!
+            supportActionBar?.title = getString(R.string.edit_title)
+        }
+
+
+        mEntryItem.fruit.forEach {
+
+        }
 
         viewModel = ViewModelProvider(
             this,
@@ -63,23 +73,7 @@ class AddEntryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(p0: View?) {
-        when (p0) {
-            binding.dateInput -> {
-                val datePicker =
-                    MaterialDatePicker.Builder.datePicker()
-                        .setTitleText("Select date")
-                        .build()
-                datePicker.show(supportFragmentManager, "Now")
-                datePicker.addOnPositiveButtonClickListener {
-                    val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-                    calendar.time = Date(it)
-                    val sdf = SimpleDateFormat("yyyy-MM-dd")
-                    val formatedDate: String = sdf.format(calendar.time)
-                    (binding.dateInput as TextView).text = formatedDate
-                    viewModel.addEntry(CreateEntry(formatedDate))
-                }
-            }
-        }
+
     }
 
 

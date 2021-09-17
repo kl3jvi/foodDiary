@@ -27,8 +27,9 @@
         android:name="com.kl3jvi.fooddiary.view.fragments.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details">
-        <argument android:name="entryDetails" />
-        <!--TODO Add argument type-->
+        <argument
+            android:name="entryDetails"
+            />
     </fragment>
 
 

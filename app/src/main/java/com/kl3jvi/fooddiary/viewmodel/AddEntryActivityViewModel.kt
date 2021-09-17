@@ -13,11 +13,7 @@ import kotlinx.coroutines.launch
 
 class AddEntryActivityViewModel(private val addEntryRepository: Repository) : ViewModel() {
 
-    fun addEntry(createEntry: CreateEntry) {
-        viewModelScope.launch {
-            addEntryRepository.addEntry(createEntry).message()
-        }
-    }
+
 
 
     fun getFruits() = liveData(Dispatchers.IO) {

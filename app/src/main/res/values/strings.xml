@@ -7,5 +7,6 @@
     <string name="action_delete_entry">Delete Entry</string>
     <string name="amount">Add Amount</string>
     <string name="apple">Apple</string>
+    <string name="edit_title">Edit Entry</string>
 
 </resources>

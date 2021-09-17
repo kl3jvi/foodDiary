@@ -1,4 +1,7 @@
 package com.kl3jvi.fooddiary.model.entities.entries
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-class Entries : ArrayList<EntriesItem>()
+@Parcelize
+class Entries : ArrayList<EntriesItem>(), Parcelable

@@ -14,8 +14,8 @@ import com.kl3jvi.fooddiary.model.network.ApiHelper
 import com.kl3jvi.fooddiary.model.network.RetrofitBuilder
 import com.kl3jvi.fooddiary.utils.Status
 import com.kl3jvi.fooddiary.view.adapters.CustomEntryAdapter
-import com.kl3jvi.fooddiary.viewmodel.MyDiaryViewModel
-import com.kl3jvi.fooddiary.viewmodel.MyDiaryViewModelFactory
+import com.kl3jvi.fooddiary.viewmodel.SharedViewModel
+import com.kl3jvi.fooddiary.viewmodel.SharedViewModelFactory
 
 
 class MyDiaryFragment : Fragment() {
@@ -24,8 +24,8 @@ class MyDiaryFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: CustomEntryAdapter
-    private val viewModel: MyDiaryViewModel by viewModels {
-        MyDiaryViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+    private val viewModel: SharedViewModel by viewModels {
+        SharedViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

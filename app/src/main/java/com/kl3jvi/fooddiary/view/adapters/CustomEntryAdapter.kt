@@ -1,5 +1,6 @@
 package com.kl3jvi.fooddiary.view.adapters
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -17,6 +18,7 @@ import com.kl3jvi.fooddiary.R
 import com.kl3jvi.fooddiary.databinding.ItemEntryBinding
 import com.kl3jvi.fooddiary.model.entities.entries.Entries
 import com.kl3jvi.fooddiary.utils.Constants
+import com.kl3jvi.fooddiary.view.activities.AddEntryActivity
 import com.kl3jvi.fooddiary.view.fragments.MyDiaryFragment
 
 
@@ -78,7 +80,10 @@ class CustomEntryAdapter(private val fragment: Fragment) :
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener {
                 if (it.itemId == R.id.action_edit_entry) {
-
+                    val intent =
+                        Intent(fragment.requireActivity(), AddEntryActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_DETAILS, entry)
+                    fragment.requireActivity().startActivity(intent)
                 } else if (it.itemId == R.id.action_delete_entry) {
                     if (fragment is MyDiaryFragment) {
                         try {

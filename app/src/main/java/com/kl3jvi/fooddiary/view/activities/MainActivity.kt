@@ -10,25 +10,20 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.kl3jvi.fooddiary.R
-
 import com.kl3jvi.fooddiary.databinding.ActivityMainBinding
 import com.kl3jvi.fooddiary.model.entities.entries.CreateEntry
 import com.kl3jvi.fooddiary.model.network.ApiHelper
 import com.kl3jvi.fooddiary.model.network.RetrofitBuilder
-import com.kl3jvi.fooddiary.view.fragments.MyDiaryFragment
-import com.kl3jvi.fooddiary.viewmodel.AddEntryActivityViewModel
-import com.kl3jvi.fooddiary.viewmodel.AddEntryViewModelFactory
+import com.kl3jvi.fooddiary.viewmodel.SharedViewModel
+import com.kl3jvi.fooddiary.viewmodel.SharedViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
-
-
-
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: AddEntryActivityViewModel
+    private lateinit var viewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,8 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(
             this,
-            AddEntryViewModelFactory(apiHelper = ApiHelper(RetrofitBuilder.apiService))
-        ).get(AddEntryActivityViewModel::class.java)
+            SharedViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+        ).get(SharedViewModel::class.java)
 
 
         val navView: BottomNavigationView = binding.bottomNavigationView
@@ -66,7 +61,8 @@ class MainActivity : AppCompatActivity() {
                 val sdf = SimpleDateFormat("yyyy-MM-dd")
                 val formatedDate: String = sdf.format(calendar.time)
                 viewModel.addEntry(CreateEntry(formatedDate))
-                (supportFragmentManager.findFragmentById(R.id.navigation_home) as MyDiaryFragment?)?.observeEntries()
+                viewModel.getEntries()
+
             }
         }
     }
