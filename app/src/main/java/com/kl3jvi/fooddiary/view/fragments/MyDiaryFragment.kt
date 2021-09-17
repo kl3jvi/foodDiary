@@ -2,6 +2,7 @@ package com.kl3jvi.fooddiary.view.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -53,9 +54,10 @@ class MyDiaryFragment : Fragment() {
     }
 
 
-    private fun observeEntries() {
-        viewModel.getEntries().observe(viewLifecycleOwner, {
-            it?.let { resource ->
+    fun observeEntries() {
+        Log.e("Une ", "u therrita")
+        viewModel.getEntries().observe(viewLifecycleOwner, { res ->
+            res?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
                         binding.progressBar.visibility = View.GONE
@@ -64,7 +66,7 @@ class MyDiaryFragment : Fragment() {
                     }
                     Status.ERROR -> {
                         binding.progressBar.visibility = View.GONE
-                        Toast.makeText(requireActivity(), it.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireActivity(), res.message, Toast.LENGTH_LONG).show()
                     }
                     Status.LOADING -> {
                         binding.progressBar.visibility = View.VISIBLE
@@ -73,6 +75,8 @@ class MyDiaryFragment : Fragment() {
                 }
             }
         })
+
+
     }
 
 
@@ -81,6 +85,11 @@ class MyDiaryFragment : Fragment() {
         observeEntries()
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        observeEntries()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -96,7 +105,7 @@ class MyDiaryFragment : Fragment() {
         when (item.itemId) {
             R.id.action_delete_all -> {
                 deleteAll()
-                observeEntries()
+
             }
         }
         return super.onOptionsItemSelected(item)
@@ -109,6 +118,7 @@ class MyDiaryFragment : Fragment() {
         builder.setMessage("Are you sure you want to delete all entries?")
         builder.setPositiveButton("Yes") { dialogInterface, _ ->
             viewModel.deleteAll()
+            observeEntries()
             dialogInterface.dismiss()
         }
         builder.setNegativeButton("NO") { dialogInterface, _ ->

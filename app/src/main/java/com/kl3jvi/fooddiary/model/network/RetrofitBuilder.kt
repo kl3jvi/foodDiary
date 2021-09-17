@@ -1,19 +1,13 @@
 package com.kl3jvi.fooddiary.model.network
 
 import com.kl3jvi.fooddiary.utils.Constants.BASE_URL
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.OkHttpClient
-
-import okhttp3.logging.HttpLoggingInterceptor
-
-
-
 
 
 object RetrofitBuilder {
-
-
 
 
     private fun getRetrofit(): Retrofit {

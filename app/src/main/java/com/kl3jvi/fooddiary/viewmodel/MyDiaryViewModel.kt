@@ -1,21 +1,18 @@
 package com.kl3jvi.fooddiary.viewmodel
 
 import androidx.lifecycle.*
+import com.kl3jvi.fooddiary.model.entities.entries.Entries
 import com.kl3jvi.fooddiary.model.network.ApiHelper
-import com.kl3jvi.fooddiary.model.repositories.MyDiaryRepository
+import com.kl3jvi.fooddiary.model.repositories.Repository
 import com.kl3jvi.fooddiary.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class MyDiaryViewModel(private val myDiaryRepository: MyDiaryRepository) : ViewModel() {
+class MyDiaryViewModel(private val myDiaryRepository: Repository) : ViewModel() {
 
-    val test = MutableLiveData<String>()
+    val test = MutableLiveData<Entries>()
 
-
-    fun doTest() {
-        test.value = "ckemi"
-    }
 
     fun getEntries() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
@@ -51,7 +48,7 @@ class MyDiaryViewModel(private val myDiaryRepository: MyDiaryRepository) : ViewM
 class MyDiaryViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MyDiaryViewModel::class.java)) {
-            return MyDiaryViewModel(MyDiaryRepository(apiHelper)) as T
+            return MyDiaryViewModel(Repository(apiHelper)) as T
         }
         throw IllegalArgumentException("Unknown class name")
     }

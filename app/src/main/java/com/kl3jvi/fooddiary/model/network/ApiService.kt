@@ -1,5 +1,6 @@
 package com.kl3jvi.fooddiary.model.network
 
+import com.kl3jvi.fooddiary.model.entities.entries.CreateEntry
 import com.kl3jvi.fooddiary.model.entities.entries.Entries
 import com.kl3jvi.fooddiary.model.entities.fruit.Fruit
 import okhttp3.ResponseBody
@@ -23,5 +24,13 @@ interface ApiService {
     suspend fun deleteById(@Path("entryId") entryId: Int): Response<ResponseBody>
 
     @POST("api/entries")
-    suspend fun addFruitEntry(@Body entries: Entries): Response<ResponseBody>
+    suspend fun addFruitEntry(@Body createEntry: CreateEntry): Response<ResponseBody>
+
+
+    @POST("api/entry/{entryId}/fruit/{fruitId}?amount={nrOfFruit}")
+    suspend fun setEditEntry(
+        @Path("entryId") entryId: Int,
+        @Path("fruitId") fruitId: Int,
+        @Path("nrOfFruit") nrOfFruit: Int
+    )
 }
