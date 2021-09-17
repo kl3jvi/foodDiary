@@ -5,16 +5,19 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
-
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.chip.Chip
+import com.kl3jvi.fooddiary.R
 import com.kl3jvi.fooddiary.databinding.ItemEntryBinding
 import com.kl3jvi.fooddiary.model.entities.Entries
 import com.kl3jvi.fooddiary.utils.Constants
+import com.kl3jvi.fooddiary.view.fragments.MyDiaryFragment
 
 
 class CustomEntryAdapter(private val fragment: Fragment) :
@@ -28,6 +31,7 @@ class CustomEntryAdapter(private val fragment: Fragment) :
         val chipGroup = view.chipGroup
         val vitamins = view.vitaminNumber
         val fruits = view.fruitNumber
+        val moreBUtton = view.moreButton
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,6 +55,7 @@ class CustomEntryAdapter(private val fragment: Fragment) :
             chip.setTextColor(Color.WHITE)
             Glide.with(fragment)
                 .load(Constants.BASE_URL + "images/${fruit.fruitType}.png")
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(object : CustomTarget<Drawable>(30, 30) {
                     override fun onResourceReady(
                         resource: Drawable,
@@ -66,6 +71,29 @@ class CustomEntryAdapter(private val fragment: Fragment) :
             holder.chipGroup.addView(chip)
         }
         holder.fruits.text = if (sumOfFruits > 1) "$sumOfFruits Fruits" else "$sumOfFruits Fruit"
+
+
+        holder.moreBUtton.setOnClickListener {
+            val popupMenu = PopupMenu(fragment.context, holder.moreBUtton)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener {
+                if (it.itemId == R.id.action_edit_entry) {
+
+                } else if (it.itemId == R.id.action_delete_entry) {
+                    if (fragment is MyDiaryFragment) {
+                        try {
+                            fragment.deleteEntry(entryId = entry.id)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                true
+            }
+            popupMenu.show()
+        }
+
+
     }
 
     override fun getItemCount() = entries.size
@@ -75,7 +103,7 @@ class CustomEntryAdapter(private val fragment: Fragment) :
         notifyDataSetChanged()
     }
 
-    fun getChipColor(fruitType: String): ColorStateList {
+    private fun getChipColor(fruitType: String): ColorStateList {
 
         when (fruitType) {
             "apple" -> {

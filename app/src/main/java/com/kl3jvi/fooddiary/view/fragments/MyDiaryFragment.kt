@@ -48,6 +48,11 @@ class MyDiaryFragment : Fragment() {
         binding.entryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = CustomEntryAdapter(this@MyDiaryFragment)
         binding.entryRecyclerView.adapter = adapter
+        observeEntries()
+    }
+
+
+    private fun observeEntries() {
         viewModel.getEntries().observe(viewLifecycleOwner, {
             it?.let { resource ->
                 when (resource.status) {
@@ -68,6 +73,12 @@ class MyDiaryFragment : Fragment() {
                 }
             }
         })
+    }
+
+
+    fun deleteEntry(entryId: Int) {
+        viewModel.deleteById(entryId)
+        observeEntries()
     }
 
 

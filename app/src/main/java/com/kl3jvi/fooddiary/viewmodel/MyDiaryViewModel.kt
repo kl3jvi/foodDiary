@@ -1,13 +1,12 @@
 package com.kl3jvi.fooddiary.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.kl3jvi.fooddiary.model.network.ApiHelper
 import com.kl3jvi.fooddiary.model.repositories.MyDiaryRepository
 import com.kl3jvi.fooddiary.utils.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 
 class MyDiaryViewModel(private val myDiaryRepository: MyDiaryRepository) : ViewModel() {
 
@@ -36,6 +35,13 @@ class MyDiaryViewModel(private val myDiaryRepository: MyDiaryRepository) : ViewM
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
     }
+
+
+    fun deleteById(entryId: Int) = viewModelScope.launch {
+        myDiaryRepository.deleteById(entryId)
+    }
+
+
 }
 
 class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {
