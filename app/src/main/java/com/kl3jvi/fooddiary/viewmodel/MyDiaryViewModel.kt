@@ -41,10 +41,14 @@ class MyDiaryViewModel(private val myDiaryRepository: MyDiaryRepository) : ViewM
         myDiaryRepository.deleteById(entryId)
     }
 
+    fun deleteAll() = viewModelScope.launch {
+        myDiaryRepository.deleteAllEntries()
+    }
+
 
 }
 
-class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {
+class MyDiaryViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MyDiaryViewModel::class.java)) {
             return MyDiaryViewModel(MyDiaryRepository(apiHelper)) as T

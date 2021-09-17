@@ -9,13 +9,27 @@
         android:id="@+id/navigation_home"
         android:name="com.kl3jvi.fooddiary.view.fragments.MyDiaryFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_navigation_home_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.kl3jvi.fooddiary.view.fragments.AboutFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.kl3jvi.fooddiary.view.fragments.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details">
+        <argument android:name="entryDetails" />
+        <!--TODO Add argument type-->
+    </fragment>
 
 
 </navigation>

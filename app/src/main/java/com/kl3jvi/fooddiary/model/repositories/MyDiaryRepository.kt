@@ -1,7 +1,7 @@
 package com.kl3jvi.fooddiary.model.repositories
 
+import com.kl3jvi.fooddiary.model.entities.entries.Entries
 import com.kl3jvi.fooddiary.model.network.ApiHelper
-import java.util.concurrent.Flow
 
 class MyDiaryRepository(private val apiHelper: ApiHelper) {
     suspend fun getEntries() = apiHelper.getEntries()
@@ -10,6 +10,8 @@ class MyDiaryRepository(private val apiHelper: ApiHelper) {
 
     suspend fun deleteAllEntries() = apiHelper.deleteAllEntries()
 
-    suspend fun deleteById(entryId: Int) = apiHelper.deleteById(entryId)
+    suspend fun deleteById(entryId: Int) = apiHelper.deleteById(entryId = entryId)
+
+
 
 }

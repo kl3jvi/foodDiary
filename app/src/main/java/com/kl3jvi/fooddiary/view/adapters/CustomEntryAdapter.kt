@@ -15,7 +15,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.chip.Chip
 import com.kl3jvi.fooddiary.R
 import com.kl3jvi.fooddiary.databinding.ItemEntryBinding
-import com.kl3jvi.fooddiary.model.entities.Entries
+import com.kl3jvi.fooddiary.model.entities.entries.Entries
 import com.kl3jvi.fooddiary.utils.Constants
 import com.kl3jvi.fooddiary.view.fragments.MyDiaryFragment
 

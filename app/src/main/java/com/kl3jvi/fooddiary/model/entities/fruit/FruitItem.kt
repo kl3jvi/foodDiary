@@ -1,4 +1,4 @@
-package com.kl3jvi.fooddiary.model.entities
+package com.kl3jvi.fooddiary.model.entities.fruit
 
 
 import com.google.gson.annotations.SerializedName

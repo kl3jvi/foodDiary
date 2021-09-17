@@ -1,20 +1,20 @@
 package com.kl3jvi.fooddiary.view.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kl3jvi.fooddiary.R
 import com.kl3jvi.fooddiary.databinding.FragmentHomeBinding
 import com.kl3jvi.fooddiary.model.network.ApiHelper
 import com.kl3jvi.fooddiary.model.network.RetrofitBuilder
 import com.kl3jvi.fooddiary.utils.Status
 import com.kl3jvi.fooddiary.view.adapters.CustomEntryAdapter
 import com.kl3jvi.fooddiary.viewmodel.MyDiaryViewModel
-import com.kl3jvi.fooddiary.viewmodel.ViewModelFactory
+import com.kl3jvi.fooddiary.viewmodel.MyDiaryViewModelFactory
 
 
 class MyDiaryFragment : Fragment() {
@@ -23,7 +23,14 @@ class MyDiaryFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: CustomEntryAdapter
-    private lateinit var viewModel: MyDiaryViewModel
+    private val viewModel: MyDiaryViewModel by viewModels {
+        MyDiaryViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,23 +39,17 @@ class MyDiaryFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        viewModel =
-            ViewModelProvider(
-                requireActivity(),
-                ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-            ).get(
-                MyDiaryViewModel::class.java
-            )
+
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.entryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = CustomEntryAdapter(this@MyDiaryFragment)
         binding.entryRecyclerView.adapter = adapter
         observeEntries()
+
     }
 
 
@@ -57,18 +58,17 @@ class MyDiaryFragment : Fragment() {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
+                        binding.progressBar.visibility = View.GONE
                         resource.data?.let { entry -> adapter.entriesList(entry) }
+                        binding.entryRecyclerView.visibility = View.VISIBLE
                     }
                     Status.ERROR -> {
-
+                        binding.progressBar.visibility = View.GONE
                         Toast.makeText(requireActivity(), it.message, Toast.LENGTH_LONG).show()
                     }
                     Status.LOADING -> {
-                        Toast.makeText(
-                            requireActivity(),
-                            it.message ?: "Loading",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.entryRecyclerView.visibility = View.GONE
                     }
                 }
             }
@@ -85,5 +85,37 @@ class MyDiaryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_all_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_delete_all -> {
+                deleteAll()
+                observeEntries()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    fun deleteAll() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete All Entries")
+        builder.setMessage("Are you sure you want to delete all entries?")
+        builder.setPositiveButton("Yes") { dialogInterface, _ ->
+            viewModel.deleteAll()
+            dialogInterface.dismiss()
+        }
+        builder.setNegativeButton("NO") { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 }

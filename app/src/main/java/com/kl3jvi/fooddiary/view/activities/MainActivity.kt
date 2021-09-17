@@ -1,5 +1,6 @@
 package com.kl3jvi.fooddiary.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -32,5 +33,10 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        binding.fab.setOnClickListener {
+            startActivity(Intent(this, AddEntryActivity::class.java))
+
+        }
     }
 }
