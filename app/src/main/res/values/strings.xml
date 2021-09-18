@@ -9,5 +9,6 @@
     <string name="apple">Apple</string>
     <string name="edit_title">Edit Entry</string>
     <string name="title_details">Details</string>
+    <string name="fruits_added_for_date">Fruits Added for Date: %1$s</string>
 
 </resources>

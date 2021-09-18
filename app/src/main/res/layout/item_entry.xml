@@ -24,15 +24,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:textColor="@color/colorPrimaryDark"
                 android:text="@string/date_added"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/entryDate"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
+                android:textColor="@color/black"
                 android:text="20.04.2009"
                 android:textStyle="bold" />
 
@@ -54,30 +56,18 @@
 
         </com.google.android.material.chip.ChipGroup>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+
+        <TextView
+            android:id="@+id/fruitNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:padding="5dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="8 Fruits Added"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/fruitNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:text="8 Fruits Added"
-                android:textStyle="bold|italic" />
-
-            <TextView
-                android:id="@+id/vitaminNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:text="8 Vitamins"
-                android:textStyle="bold|italic" />
-        </LinearLayout>
 
     </LinearLayout>
 
