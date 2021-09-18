@@ -51,6 +51,12 @@ class SharedViewModel(private val sharedRepo: Repository) : ViewModel() {
     }
 
 
+    fun setEditEntry(entryId: Int, fruitId: Int, nrOfFruit: Int) {
+        viewModelScope.launch {
+            sharedRepo.setEditEntry(entryId, fruitId, nrOfFruit)
+        }
+    }
+
 }
 
 class SharedViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {

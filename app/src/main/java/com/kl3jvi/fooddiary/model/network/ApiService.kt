@@ -27,10 +27,10 @@ interface ApiService {
     suspend fun addFruitEntry(@Body createEntry: CreateEntry): Response<ResponseBody>
 
 
-    @POST("api/entry/{entryId}/fruit/{fruitId}?amount={nrOfFruit}")
+    @POST("api/entry/{entryId}/fruit/{fruitId}?")
     suspend fun setEditEntry(
         @Path("entryId") entryId: Int,
         @Path("fruitId") fruitId: Int,
-        @Path("nrOfFruit") nrOfFruit: Int
-    )
+        @Query("amount") nrOfFruit: Int
+    ): Response<ResponseBody>
 }

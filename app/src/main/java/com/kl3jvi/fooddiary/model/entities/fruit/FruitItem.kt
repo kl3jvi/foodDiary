@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class FruitItem(
     @SerializedName("id")
-    val id: Int,
+    val fruitId: Int,
     @SerializedName("image")
     val image: String,
     @SerializedName("type")

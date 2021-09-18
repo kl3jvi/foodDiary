@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class EntryTransfer(
+
     val fruitsAdded: List<FruitsAddedInThisEntry>,
     val id: Int
 ) : Parcelable

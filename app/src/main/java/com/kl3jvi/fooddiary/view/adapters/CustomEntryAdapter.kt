@@ -49,7 +49,7 @@ class CustomEntryAdapter(private val fragment: Fragment) :
         var sumOfFruits = 0
         val sumOfVitamins = 0
         holder.chipGroup.removeAllViews()
-        entry.fruit.forEach { fruit ->
+        entry.fruitList.forEach { fruit ->
             sumOfFruits += fruit.amount
             val chip = Chip(fragment.requireContext())
 
@@ -85,13 +85,13 @@ class CustomEntryAdapter(private val fragment: Fragment) :
                         Intent(fragment.requireActivity(), AddEntryActivity::class.java)
                     intent.putExtra(
                         Constants.EXTRA_DETAILS,
-                        EntryTransfer(entry.fruit, entry.id)
+                        EntryTransfer(entry.fruitList, entry.entryId)
                     )
                     fragment.requireActivity().startActivity(intent)
                 } else if (it.itemId == R.id.action_delete_entry) {
                     if (fragment is MyDiaryFragment) {
                         try {
-                            fragment.deleteEntry(entryId = entry.id)
+                            fragment.deleteEntry(entryId = entry.entryId)
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }

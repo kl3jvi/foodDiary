@@ -1,8 +1,6 @@
 package com.kl3jvi.fooddiary.view.activities
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -15,14 +13,15 @@ import com.kl3jvi.fooddiary.model.network.RetrofitBuilder
 import com.kl3jvi.fooddiary.utils.Constants
 import com.kl3jvi.fooddiary.utils.Status
 import com.kl3jvi.fooddiary.view.adapters.CustomAddAdapter
-import com.kl3jvi.fooddiary.viewmodel.AddEntryActivityViewModel
-import com.kl3jvi.fooddiary.viewmodel.AddEntryViewModelFactory
+import com.kl3jvi.fooddiary.viewmodel.SharedViewModel
+import com.kl3jvi.fooddiary.viewmodel.SharedViewModelFactory
+import java.lang.Exception
 
 
-class AddEntryActivity : AppCompatActivity(), View.OnClickListener {
+class AddEntryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddEntryBinding
-    private lateinit var viewModel: AddEntryActivityViewModel
+    private lateinit var viewModel: SharedViewModel
     private lateinit var adapter: CustomAddAdapter
     private lateinit var mEntryItem: EntryTransfer
 
@@ -44,13 +43,13 @@ class AddEntryActivity : AppCompatActivity(), View.OnClickListener {
 
         viewModel = ViewModelProvider(
             this,
-            AddEntryViewModelFactory(apiHelper = ApiHelper(RetrofitBuilder.apiService))
-        ).get(AddEntryActivityViewModel::class.java)
+            SharedViewModelFactory(apiHelper = ApiHelper(RetrofitBuilder.apiService))
+        ).get(SharedViewModel::class.java)
 
         binding.rvList.layoutManager = GridLayoutManager(this, 2)
         adapter = CustomAddAdapter(this)
         binding.rvList.adapter = adapter
-        adapter.passTest(mEntryItem.fruitsAdded)
+        adapter.passEditItems(mEntryItem.fruitsAdded)
 
         viewModel.getFruits().observe(this, { res ->
             res?.let { resource ->
@@ -71,10 +70,15 @@ class AddEntryActivity : AppCompatActivity(), View.OnClickListener {
         })
 
 
+
+
+
     }
 
-    override fun onClick(p0: View?) {
+    fun editSetEntry(fruitId: Int, nrOfFruit: Int) {
+        viewModel.setEditEntry(mEntryItem.id, fruitId, nrOfFruit)
 
+        println("${mEntryItem.id}-----$fruitId-----$nrOfFruit")
     }
 
 

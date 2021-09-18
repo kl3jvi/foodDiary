@@ -9,12 +9,13 @@ import com.kl3jvi.fooddiary.databinding.ItemAddEntryBinding
 import com.kl3jvi.fooddiary.model.entities.entries.FruitsAddedInThisEntry
 import com.kl3jvi.fooddiary.model.entities.fruit.FruitItem
 import com.kl3jvi.fooddiary.utils.Constants
+import com.kl3jvi.fooddiary.view.activities.AddEntryActivity
 
 class CustomAddAdapter(private val activity: Activity) :
     RecyclerView.Adapter<CustomAddAdapter.ViewHolder>() {
     private val arrayOfItems = ArrayList<FruitItem>()
     private var list: List<FruitItem> = listOf()
-
+    private var entryId = 0
     private var fruitsForEdit: List<FruitsAddedInThisEntry> = listOf()
 
     inner class ViewHolder(view: ItemAddEntryBinding) : RecyclerView.ViewHolder(view.root) {
@@ -33,9 +34,10 @@ class CustomAddAdapter(private val activity: Activity) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         var ctr = 0;
+
         fruitsForEdit.forEach {
-            if(it.fruitId == item.id){
-                holder.counter.text  = it.amount.toString()
+            if (it.fruitId == item.fruitId) {
+                holder.counter.text = it.amount.toString()
                 ctr = it.amount
             }
         }
@@ -43,6 +45,9 @@ class CustomAddAdapter(private val activity: Activity) :
         holder.add.setOnClickListener {
             ctr++
             holder.counter.text = ctr.toString()
+            if (activity is AddEntryActivity) {
+                activity.editSetEntry(item.fruitId, ctr)
+            }
         }
         holder.remove.setOnClickListener {
             if (ctr > 0)
@@ -68,7 +73,7 @@ class CustomAddAdapter(private val activity: Activity) :
     }
 
 
-    fun passTest(fruitsAdded: List<FruitsAddedInThisEntry>) {
+    fun passEditItems(fruitsAdded: List<FruitsAddedInThisEntry>) {
         fruitsForEdit = fruitsAdded
         notifyDataSetChanged()
     }
