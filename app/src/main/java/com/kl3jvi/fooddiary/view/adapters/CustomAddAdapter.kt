@@ -9,7 +9,7 @@ import com.kl3jvi.fooddiary.databinding.ItemAddEntryBinding
 import com.kl3jvi.fooddiary.model.entities.entries.FruitsAddedInThisEntry
 import com.kl3jvi.fooddiary.model.entities.fruit.FruitItem
 import com.kl3jvi.fooddiary.utils.Constants
-import com.kl3jvi.fooddiary.view.activities.AddEntryActivity
+import com.kl3jvi.fooddiary.view.activities.EditEntryActivity
 
 class CustomAddAdapter(private val activity: Activity) :
     RecyclerView.Adapter<CustomAddAdapter.ViewHolder>() {
@@ -45,7 +45,7 @@ class CustomAddAdapter(private val activity: Activity) :
         holder.add.setOnClickListener {
             ctr++
             holder.counter.text = ctr.toString()
-            if (activity is AddEntryActivity) {
+            if (activity is EditEntryActivity) {
                 activity.editSetEntry(item.fruitId, ctr)
             }
         }
@@ -53,7 +53,7 @@ class CustomAddAdapter(private val activity: Activity) :
             if (ctr > 0)
                 ctr--
             holder.counter.text = ctr.toString()
-            if (activity is AddEntryActivity) {
+            if (activity is EditEntryActivity) {
                 activity.editSetEntry(item.fruitId, ctr)
             }
         }

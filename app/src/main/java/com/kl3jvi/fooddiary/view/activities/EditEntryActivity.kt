@@ -17,7 +17,7 @@ import com.kl3jvi.fooddiary.viewmodel.SharedViewModel
 import com.kl3jvi.fooddiary.viewmodel.SharedViewModelFactory
 
 
-class AddEntryActivity : AppCompatActivity() {
+class EditEntryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddEntryBinding
     private lateinit var viewModel: SharedViewModel

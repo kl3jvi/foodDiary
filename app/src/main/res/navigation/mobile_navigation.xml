@@ -25,11 +25,11 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.kl3jvi.fooddiary.view.fragments.DetailsFragment"
-        android:label="fragment_details"
+        android:label="@string/title_details"
         tools:layout="@layout/fragment_details">
         <argument
             android:name="entryDetails"
-            />
+            app:argType="com.kl3jvi.fooddiary.model.entities.entries.EntriesItem" />
     </fragment>
 
 

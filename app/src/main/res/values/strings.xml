@@ -8,5 +8,6 @@
     <string name="amount">Add Amount</string>
     <string name="apple">Apple</string>
     <string name="edit_title">Edit Entry</string>
+    <string name="title_details">Details</string>
 
 </resources>

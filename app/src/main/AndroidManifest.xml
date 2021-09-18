@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodDiary">
         <activity
-            android:name=".view.activities.AddEntryActivity"
+            android:name=".view.activities.EditEntryActivity"
             android:exported="true" />
         <activity
             android:name=".view.activities.MainActivity"

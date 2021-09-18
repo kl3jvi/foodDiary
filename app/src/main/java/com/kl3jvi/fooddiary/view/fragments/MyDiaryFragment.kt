@@ -7,12 +7,15 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kl3jvi.fooddiary.R
 import com.kl3jvi.fooddiary.databinding.FragmentHomeBinding
+import com.kl3jvi.fooddiary.model.entities.entries.EntriesItem
 import com.kl3jvi.fooddiary.model.network.ApiHelper
 import com.kl3jvi.fooddiary.model.network.RetrofitBuilder
 import com.kl3jvi.fooddiary.utils.Status
+import com.kl3jvi.fooddiary.view.activities.MainActivity
 import com.kl3jvi.fooddiary.view.adapters.CustomEntryAdapter
 import com.kl3jvi.fooddiary.viewmodel.SharedViewModel
 import com.kl3jvi.fooddiary.viewmodel.SharedViewModelFactory
@@ -88,7 +91,9 @@ class MyDiaryFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        observeEntries()
+        if(requireActivity() is MainActivity){
+            (activity as MainActivity)?.showBottomNavBar()
+        }
     }
 
     override fun onDestroyView() {
@@ -128,4 +133,17 @@ class MyDiaryFragment : Fragment() {
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
+
+    fun entryDetails(entry: EntriesItem) {
+        findNavController().navigate(
+            MyDiaryFragmentDirections.actionNavigationHomeToDetailsFragment(
+                entry
+            )
+        )
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.hideBottomNavBar()
+        }
+    }
+
+
 }

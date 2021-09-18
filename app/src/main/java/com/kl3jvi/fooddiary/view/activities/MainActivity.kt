@@ -1,6 +1,7 @@
 package com.kl3jvi.fooddiary.view.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -65,5 +66,26 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    fun hideBottomNavBar() {
+        binding.bottomAppBar.clearAnimation()
+        binding.bottomAppBar.animate()
+            .translationY(binding.bottomAppBar.height.toFloat()).duration = 300
+        binding.bottomAppBar.visibility = View.GONE
+
+        binding.fab.clearAnimation()
+        binding.fab.animate().translationY(binding.bottomAppBar.height.toFloat()).duration = 300
+        binding.fab.visibility = View.GONE
+    }
+
+    fun showBottomNavBar() {
+        binding.bottomAppBar.visibility = View.VISIBLE
+        binding.bottomAppBar.clearAnimation()
+        binding.bottomAppBar.animate().translationY(0f).duration = 300
+
+        binding.fab.visibility = View.VISIBLE
+        binding.bottomAppBar.clearAnimation()
+        binding.fab.animate().translationY(0f).duration = 300
     }
 }
