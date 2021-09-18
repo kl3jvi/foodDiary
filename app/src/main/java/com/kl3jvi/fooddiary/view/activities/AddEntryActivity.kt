@@ -15,7 +15,6 @@ import com.kl3jvi.fooddiary.utils.Status
 import com.kl3jvi.fooddiary.view.adapters.CustomAddAdapter
 import com.kl3jvi.fooddiary.viewmodel.SharedViewModel
 import com.kl3jvi.fooddiary.viewmodel.SharedViewModelFactory
-import java.lang.Exception
 
 
 class AddEntryActivity : AppCompatActivity() {
@@ -68,17 +67,10 @@ class AddEntryActivity : AppCompatActivity() {
                 }
             }
         })
-
-
-
-
-
     }
 
     fun editSetEntry(fruitId: Int, nrOfFruit: Int) {
         viewModel.setEditEntry(mEntryItem.id, fruitId, nrOfFruit)
-
-        println("${mEntryItem.id}-----$fruitId-----$nrOfFruit")
     }
 
 

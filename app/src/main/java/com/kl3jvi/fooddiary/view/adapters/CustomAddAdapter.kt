@@ -53,7 +53,9 @@ class CustomAddAdapter(private val activity: Activity) :
             if (ctr > 0)
                 ctr--
             holder.counter.text = ctr.toString()
-
+            if (activity is AddEntryActivity) {
+                activity.editSetEntry(item.fruitId, ctr)
+            }
         }
 
         Glide.with(activity)
